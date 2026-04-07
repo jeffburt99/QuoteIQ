@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)file:///Users/jeffburt/Downloads/quote-tester_1.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QuoteIQ — AI Estimating for Electricians</title>
+<script src="./index_files/jspdf.umd.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f3; color: #1a1a18; min-height: 100vh; padding: 32px 16px; }
+  .container { max-width: 780px; margin: 0 auto; }
+
+  .logo-row { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+  .logo-icon { width: 32px; height: 32px; background: #1a1a18; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+  .logo-text { font-size: 18px; font-weight: 600; letter-spacing: -0.3px; }
+  .logo-text span { color: #f5a623; }
+  .subtitle { font-size: 13px; color: #888; margin-bottom: 28px; }
+
+  .card { background: #fff; border-radius: 12px; border: 0.5px solid #e0e0dd; padding: 20px 22px; margin-bottom: 14px; }
+  .card-title { font-size: 12px; font-weight: 600; color: #1a1a18; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 14px; }
+
+  label { font-size: 11px; font-weight: 500; color: #888; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 5px; }
+  input, textarea, select { width: 100%; font-size: 13px; padding: 9px 12px; border-radius: 8px; border: 0.5px solid #ddd; background: #fafaf9; color: #1a1a18; font-family: inherit; }
+  input:focus, textarea:focus, select:focus { outline: none; border-color: #aaa; background: #fff; }
+  textarea { resize: vertical; line-height: 1.6; }
+
+  .field-row { display: grid; gap: 12px; margin-bottom: 14px; }
+  .cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .cols-2 { grid-template-columns: 1fr 1fr; }
+
+  .api-wrap { position: relative; }
+  .api-wrap input { padding-right: 60px; font-family: monospace; font-size: 12px; }
+  .toggle-btn { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); font-size: 11px; color: #888; cursor: pointer; background: none; border: none; padding: 0; }
+
+  .presets { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; align-items: center; }
+  .preset-btn { font-size: 11px; padding: 4px 11px; border-radius: 20px; border: 0.5px solid #ddd; background: #fff; color: #666; cursor: pointer; }
+  .preset-btn:hover { background: #f5f5f3; color: #1a1a18; }
+
+  .generate-btn { width: 100%; font-size: 14px; font-weight: 600; padding: 12px; border-radius: 8px; border: none; background: #1a1a18; color: #fff; cursor: pointer; margin-top: 6px; letter-spacing: 0.01em; }
+  .generate-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+  .generate-btn:hover:not(:disabled) { background: #2d2d2a; }
+
+  /* output area */
+  .output-wrap { display: none; margin-top: 6px; }
+
+  .action-bar { display: flex; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+  .action-btn { flex: 1; min-width: 140px; font-size: 13px; font-weight: 500; padding: 10px 16px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 7px; border: 0.5px solid #ddd; background: #fff; color: #1a1a18; }
+  .action-btn:hover { background: #f5f5f3; }
+  .action-btn.primary { background: #1a1a18; color: #fff; border-color: #1a1a18; }
+  .action-btn.primary:hover { background: #2d2d2a; }
+  .action-btn svg { flex-shrink: 0; }
+
+  /* quote preview */
+  .quote-preview { background: #fff; border-radius: 12px; border: 0.5px solid #e0e0dd; padding: 28px 30px; }
+  .qp-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 22px; padding-bottom: 18px; border-bottom: 1.5px solid #1a1a18; }
+  .qp-biz { font-size: 18px; font-weight: 700; color: #1a1a18; letter-spacing: -0.3px; }
+  .qp-tagline { font-size: 12px; color: #888; margin-top: 3px; }
+  .qp-meta-label { font-size: 10px; color: #aaa; text-transform: uppercase; letter-spacing: 0.06em; }
+  .qp-meta-val { font-size: 13px; font-weight: 600; color: #1a1a18; margin-top: 2px; }
+  .qp-meta-date { font-size: 12px; color: #888; margin-top: 3px; }
+
+  .qp-to { margin-bottom: 18px; }
+  .qp-to-label { font-size: 10px; color: #aaa; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 3px; }
+  .qp-to-name { font-size: 14px; font-weight: 600; color: #1a1a18; }
+  .qp-to-email { font-size: 12px; color: #888; }
+
+  .qp-summary-label { font-size: 10px; color: #aaa; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+  .qp-summary { font-size: 13px; color: #444; line-height: 1.55; margin-bottom: 20px; }
+
+  table.qt { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-bottom: 18px; }
+  table.qt th { text-align: left; font-size: 10px; font-weight: 600; color: #aaa; text-transform: uppercase; letter-spacing: 0.06em; padding: 0 0 10px; border-bottom: 0.5px solid #e0e0dd; }
+  table.qt th.r { text-align: right; }
+  table.qt td { padding: 9px 0; border-bottom: 0.5px solid #f0f0ee; vertical-align: top; line-height: 1.5; color: #1a1a18; }
+  table.qt td.r { text-align: right; white-space: nowrap; color: #444; }
+  table.qt tr:last-child td { border-bottom: none; }
+
+  .qp-totals { margin-left: auto; width: 210px; border-top: 0.5px solid #e0e0dd; padding-top: 12px; }
+  .tot-row { display: flex; justify-content: space-between; font-size: 12px; color: #888; padding: 3px 0; }
+  .tot-row.final { font-size: 16px; font-weight: 700; color: #1a1a18; border-top: 1.5px solid #1a1a18; padding-top: 10px; margin-top: 6px; }
+
+  .qp-warn { background: #fff8ee; border-left: 3px solid #f5a623; border-radius: 0 6px 6px 0; padding: 10px 14px; font-size: 12px; color: #7a4f00; margin: 14px 0; line-height: 1.6; }
+  .qp-notes { font-size: 12px; color: #888; line-height: 1.75; margin-top: 18px; padding-top: 16px; border-top: 0.5px solid #eee; }
+  .qp-footer { margin-top: 22px; padding-top: 14px; border-top: 0.5px solid #eee; font-size: 11px; color: #bbb; text-align: center; }
+
+  .msg { font-size: 13px; color: #888; padding: 20px 0; text-align: center; }
+  .err { background: #FCEBEB; border-radius: 8px; padding: 12px 16px; font-size: 13px; color: #791F1F; line-height: 1.6; }
+  .spin { display: inline-block; width: 13px; height: 13px; border: 2px solid #ddd; border-top-color: #555; border-radius: 50%; animation: sp 0.7s linear infinite; vertical-align: middle; margin-right: 6px; }
+  @keyframes sp { to { transform: rotate(360deg); } }
+
+  /* email modal */
+  .modal-bg { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 100; align-items: center; justify-content: center; }
+  .modal-bg.open { display: flex; }
+  .modal { background: #fff; border-radius: 14px; padding: 24px 26px; width: 100%; max-width: 460px; margin: 16px; }
+  .modal h3 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+  .modal p { font-size: 13px; color: #888; margin-bottom: 18px; line-height: 1.5; }
+  .modal label { margin-bottom: 5px; }
+  .modal input { margin-bottom: 12px; }
+  .modal-btns { display: flex; gap: 10px; margin-top: 6px; }
+  .modal-btns button { flex: 1; padding: 10px; border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer; border: 0.5px solid #ddd; background: #fff; color: #1a1a18; }
+  .modal-btns .send { background: #1a1a18; color: #fff; border-color: #1a1a18; }
+
+  @media (max-width: 600px) {
+    .cols-3 { grid-template-columns: 1fr 1fr; }
+    .cols-3 > div:last-child { grid-column: span 2; }
+    .action-btn { min-width: 120px; font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="modal-bg" id="email-modal">
+  <div class="modal">
+    <h3>📧 Send quote by email</h3>
+    <p>This opens your email client with the quote details pre-filled. Your customer receives a professional summary — attach the PDF for the full itemised quote.</p>
+    <label>Customer name</label>
+    <input type="text" id="cust-name" placeholder="e.g. Sarah Johnson">
+    <label>Customer email</label>
+    <input type="email" id="cust-email" placeholder="e.g. sarah@example.com">
+    <label>Your email (reply-to)</label>
+    <input type="email" id="from-email" placeholder="e.g. james@sparkpro.com">
+    <div class="modal-btns">
+      <button onclick="closeModal()">Cancel</button>
+      <button class="send" onclick="sendEmail()">Open in email client</button>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="logo-row">
+    <div class="logo-icon">⚡</div>
+    <div class="logo-text">Quote<span>IQ</span></div>
+  </div>
+  <p class="subtitle">AI-powered estimating for electricians — generate, download &amp; email professional quotes in minutes.</p>
+
+  <!-- Settings -->
+  <div class="card">
+    <div class="card-title">Your details</div>
+    <div class="field-row cols-3">
+      <div><label>Business name</label><input type="text" id="biz-name" value="Spark Pro Electrical"></div>
+      <div><label>Your name</label><input type="text" id="elec-name" value="James Carter"></div>
+      <div><label>Labour rate ($/hr)</label><input type="number" id="rate" value="95"></div>
+    </div>
+    <div class="field-row cols-2">
+      <div><label>Phone</label><input type="text" id="phone" placeholder="e.g. 07700 900 123"></div>
+      <div><label>Email</label><input type="email" id="email" placeholder="e.g. james@sparkpro.com"></div>
+    </div>
+    <div style="margin-bottom:14px;">
+      <label>Anthropic API key</label>
+      <div class="api-wrap">
+        <input type="password" id="api-key" placeholder="sk-ant-...">
+        <button class="toggle-btn" onclick="toggleKey()">Show</button>
+      </div>
+      <p style="font-size:11px;color:#bbb;margin-top:5px;">Stays in your browser only — never stored or shared.</p>
+    </div>
+  </div>
+
+  <!-- Job input -->
+  <div class="card">
+    <div class="card-title">Job description</div>
+    <div class="presets">
+      <span style="font-size:11px;color:#bbb;">Examples:</span>
+      <button class="preset-btn" onclick="setPreset(&#39;consumer&#39;)">Consumer unit upgrade</button>
+      <button class="preset-btn" onclick="setPreset(&#39;lights&#39;)">Lighting install</button>
+      <button class="preset-btn" onclick="setPreset(&#39;ev&#39;)">EV charger</button>
+    </div>
+    <textarea id="job" rows="4" placeholder="Describe the job in plain English — speak it like you would to a colleague. e.g. Customer wants a full consumer unit upgrade, 16-way dual RCD, about 12 circuits, two-storey semi..."></textarea>
+    <button class="generate-btn" id="run-btn" onclick="go()">⚡ Generate quote</button>
+  </div>
+
+  <!-- Output -->
+  <div class="output-wrap" id="out-wrap">
+    <div id="status-area"></div>
+
+    <div id="quote-section" style="display:none;">
+      <div class="action-bar">
+        <button class="action-btn primary" onclick="downloadPDF()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          Download PDF
+        </button>
+        <button class="action-btn" onclick="openModal()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          Email to customer
+        </button>
+        <button class="action-btn" onclick="resetForm()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 .49-3.74"></path></svg>
+          New quote
+        </button>
+      </div>
+
+      <div class="quote-preview" id="quote-preview"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+var currentQuote = null;
+var currentMeta = {};
+
+var P = {
+  consumer: "Customer wants a full consumer unit upgrade from old fuse board, 16-way dual RCD unit, all circuits tested and certified. Two-storey semi-detached, about 12 circuits. Also wants two outdoor weatherproof sockets fitted at the back of the house.",
+  lights: "Need to install 8 LED downlights in the kitchen, replace existing pendant with a new fitting in the dining room, and add a dimmer switch to the lounge circuit. House is 1970s construction, not sure what the wiring is like.",
+  ev: "Customer wants a 7kW EV charger installed in the garage, dedicated circuit from the consumer unit, trunking along the wall. They have an existing double socket in the garage they also want to keep."
+};
+
+function setPreset(k) { document.getElementById('job').value = P[k]; }
+
+function toggleKey() {
+  var i = document.getElementById('api-key');
+  var b = event.target;
+  i.type = i.type === 'password' ? 'text' : 'password';
+  b.textContent = i.type === 'password' ? 'Show' : 'Hide';
+}
+
+function money(n) { return '$' + (Math.round((n||0)*100)/100).toFixed(2); }
+
+function showStatus(html) {
+  document.getElementById('out-wrap').style.display = 'block';
+  document.getElementById('status-area').innerHTML = html;
+  document.getElementById('quote-section').style.display = 'none';
+}
+
+function showErr(msg) {
+  showStatus('<div class="err"><strong>Error:</strong> ' + msg + '</div>');
+}
+
+function go() {
+  var key  = document.getElementById('api-key').value.trim();
+  var job  = document.getElementById('job').value.trim();
+  var biz  = document.getElementById('biz-name').value.trim() || 'Spark Pro Electrical';
+  var name = document.getElementById('elec-name').value.trim() || 'James Carter';
+  var rate = parseFloat(document.getElementById('rate').value) || 95;
+  var phone = document.getElementById('phone').value.trim();
+  var email = document.getElementById('email').value.trim();
+
+  if (!key) { showErr('Please enter your Anthropic API key in the settings above.'); return; }
+  if (!job) { showErr('Please describe the job or pick one of the examples.'); return; }
+
+  currentMeta = { biz: biz, name: name, rate: rate, phone: phone, email: email };
+
+  var btn = document.getElementById('run-btn');
+  btn.disabled = true;
+  showStatus('<p class="msg"><span class="spin"></span>Generating your quote…</p>');
+
+  var sys = 'You are an expert electrical estimating assistant for ' + biz + ', run by ' + name + '.\n'
+    + 'LABOUR RATE: $' + rate + '/hr\n\n'
+    + 'RULES:\n'
+    + '- Include all work items mentioned or reasonably implied\n'
+    + '- Each line item: description, hours, materials_cost, line_total (hours x rate + materials_cost)\n'
+    + '- Materials priced at trade cost + 20% markup\n'
+    + '- Add callout/travel if not mentioned (default 1hr labour)\n'
+    + '- Include certification/test costs where applicable\n'
+    + '- Mark unclear items with [CLARIFY] in the description field\n'
+    + '- Notes section: 1yr labour warranty, 50% deposit + balance on completion, relevant compliance\n'
+    + '- No invented product model numbers\n\n'
+    + 'Return ONLY raw valid JSON, no markdown, no explanation:\n'
+    + '{"customer":"","job_summary":"","line_items":[{"description":"","hours":0,"materials_cost":0,"line_total":0}],"subtotal":0,"vat_rate":0.10,"vat_amount":0,"total":0,"clarifications":[],"notes":""}';
+
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', 'https://api.anthropic.com/v1/messages');
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.setRequestHeader('x-api-key', key);
+  xhr.setRequestHeader('anthropic-version', '2023-06-01');
+  xhr.setRequestHeader('anthropic-dangerous-direct-browser-access', 'true');
+
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState !== 4) return;
+    btn.disabled = false;
+
+    var data;
+    try { data = JSON.parse(xhr.responseText); }
+    catch(e) { showErr('Could not read the API response. Please try again.'); return; }
+
+    if (xhr.status !== 200) {
+      showErr((data.error && data.error.message) ? data.error.message : 'API error ' + xhr.status);
+      return;
+    }
+    if (!data.content || !data.content[0] || !data.content[0].text) {
+      showErr('Empty response from API — please try again.');
+      return;
+    }
+
+    var raw = data.content[0].text.replace(/```json|```/g, '').trim();
+    try { currentQuote = JSON.parse(raw); }
+    catch(pe) { showErr('Could not parse quote response — please try again.'); return; }
+
+    renderQuote(currentQuote);
+  };
+
+  xhr.onerror = function() {
+    btn.disabled = false;
+    showErr('Network error — check your internet connection and try again.');
+  };
+
+  xhr.send(JSON.stringify({
+    model: 'claude-haiku-4-5-20251001',
+    max_tokens: 1000,
+    system: sys,
+    messages: [{ role: 'user', content: job }]
+  }));
+}
+
+function renderQuote(q) {
+  var m = currentMeta;
+  var today = new Date().toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' });
+  var expiry = new Date(Date.now() + 30*24*60*60*1000).toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' });
+  var num = 'QT-' + Math.floor(Math.random()*9000+1000);
+  currentMeta.quoteNum = num;
+  currentMeta.today = today;
+  currentMeta.total = q.total;
+
+  var rows = (q.line_items||[]).map(function(i) {
+    return '<tr>'
+      + '<td style="width:42%;padding-right:10px;">' + i.description + '</td>'
+      + '<td class="r" style="width:8%">' + i.hours + '</td>'
+      + '<td class="r" style="width:16%">' + money(i.hours * m.rate) + '</td>'
+      + '<td class="r" style="width:16%">' + money(i.materials_cost) + '</td>'
+      + '<td class="r" style="width:18%">' + money(i.line_total) + '</td>'
+      + '</tr>';
+  }).join('');
+
+  var warns = (q.clarifications && q.clarifications.length)
+    ? '<div class="qp-warn"><strong>⚠ Needs clarification before finalising:</strong><br>' + q.clarifications.join('<br>') + '</div>' : '';
+
+  var contact = [m.phone, m.email].filter(Boolean).join(' &nbsp;·&nbsp; ');
+
+  document.getElementById('quote-preview').innerHTML =
+    '<div class="qp-header">'
+    + '<div><div class="qp-biz">' + m.biz + '</div><div class="qp-tagline">' + m.name + (contact ? ' &nbsp;·&nbsp; ' + contact : '') + '</div></div>'
+    + '<div style="text-align:right;"><div class="qp-meta-label">Quote</div><div class="qp-meta-val">' + num + '</div><div class="qp-meta-date">' + today + ' &nbsp;·&nbsp; valid 30 days</div></div>'
+    + '</div>'
+    + '<div class="qp-summary-label">Scope of work</div>'
+    + '<div class="qp-summary">' + q.job_summary + '</div>'
+    + '<table class="qt"><thead><tr>'
+    + '<th>Description</th><th class="r">Hrs</th><th class="r">Labour</th><th class="r">Materials</th><th class="r">Total</th>'
+    + '</tr></thead><tbody>' + rows + '</tbody></table>'
+    + '<div class="qp-totals">'
+    + '<div class="tot-row"><span>Subtotal</span><span>' + money(q.subtotal) + '</span></div>'
+    + '<div class="tot-row"><span>Tax (' + Math.round((q.vat_rate||0)*100) + '%)</span><span>' + money(q.vat_amount) + '</span></div>'
+    + '<div class="tot-row final"><span>Total</span><span>' + money(q.total) + '</span></div>'
+    + '</div>'
+    + warns
+    + '<div class="qp-notes">' + q.notes + '</div>'
+    + '<div class="qp-footer">Quote valid until ' + expiry + ' &nbsp;·&nbsp; Generated by QuoteIQ</div>';
+
+  document.getElementById('status-area').innerHTML = '';
+  document.getElementById('quote-section').style.display = 'block';
+  document.getElementById('out-wrap').style.display = 'block';
+  document.getElementById('quote-preview').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+/* ---- PDF ---- */
+function downloadPDF() {
+  if (!currentQuote || !window.jspdf) { alert('Generate a quote first.'); return; }
+  var q = currentQuote;
+  var m = currentMeta;
+  var doc = new window.jspdf.jsPDF({ unit: 'mm', format: 'a4' });
+  var lm = 18, rm = 192, y = 20, pw = 174;
+
+  // Header
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(18);
+  doc.text(m.biz, lm, y);
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(9);
+  doc.setTextColor(120,120,120);
+  y += 6;
+  var contact = [m.name, m.phone, m.email].filter(Boolean).join('   ·   ');
+  doc.text(contact, lm, y);
+
+  // Quote meta (right)
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(10);
+  doc.setTextColor(30,30,28);
+  doc.text('Quote ' + (m.quoteNum||''), rm, 20, { align: 'right' });
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(9);
+  doc.setTextColor(120,120,120);
+  doc.text(m.today || '', rm, 26, { align: 'right' });
+
+  // Divider
+  y += 8;
+  doc.setDrawColor(30,30,28);
+  doc.setLineWidth(0.6);
+  doc.line(lm, y, rm, y);
+  y += 8;
+
+  // Summary
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(8);
+  doc.setTextColor(150,150,148);
+  doc.text('SCOPE OF WORK', lm, y);
+  y += 5;
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(10);
+  doc.setTextColor(60,60,58);
+  var sumLines = doc.splitTextToSize(q.job_summary || '', pw);
+  doc.text(sumLines, lm, y);
+  y += sumLines.length * 5 + 8;
+
+  // Table header
+  doc.setFillColor(245,245,243);
+  doc.rect(lm, y-4, pw, 8, 'F');
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(8);
+  doc.setTextColor(130,130,128);
+  doc.text('DESCRIPTION', lm+2, y+0.5);
+  doc.text('HRS', 128, y+0.5, { align: 'right' });
+  doc.text('LABOUR', 148, y+0.5, { align: 'right' });
+  doc.text('MATERIALS', 168, y+0.5, { align: 'right' });
+  doc.text('TOTAL', rm, y+0.5, { align: 'right' });
+  y += 7;
+
+  // Table rows
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(9);
+  doc.setDrawColor(220,220,218);
+  doc.setLineWidth(0.2);
+  (q.line_items||[]).forEach(function(item) {
+    var descLines = doc.splitTextToSize(item.description, 95);
+    var rowH = Math.max(descLines.length * 4.5, 7);
+    doc.setTextColor(30,30,28);
+    doc.text(descLines, lm+2, y);
+    doc.setTextColor(80,80,78);
+    doc.text(String(item.hours), 128, y, { align: 'right' });
+    doc.text(money(item.hours * m.rate), 148, y, { align: 'right' });
+    doc.text(money(item.materials_cost), 168, y, { align: 'right' });
+    doc.setTextColor(30,30,28);
+    doc.text(money(item.line_total), rm, y, { align: 'right' });
+    y += rowH;
+    doc.line(lm, y, rm, y);
+    y += 2;
+    if (y > 260) { doc.addPage(); y = 20; }
+  });
+
+  y += 4;
+  // Totals
+  var totX = 140;
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(9);
+  doc.setTextColor(100,100,98);
+  doc.text('Subtotal', totX, y); doc.text(money(q.subtotal), rm, y, { align: 'right' }); y += 5;
+  doc.text('Tax (' + Math.round((q.vat_rate||0)*100) + '%)', totX, y); doc.text(money(q.vat_amount), rm, y, { align: 'right' }); y += 6;
+  doc.setDrawColor(30,30,28); doc.setLineWidth(0.5); doc.line(totX, y, rm, y); y += 5;
+  doc.setFont('helvetica', 'bold'); doc.setFontSize(11); doc.setTextColor(30,30,28);
+  doc.text('Total', totX, y); doc.text(money(q.total), rm, y, { align: 'right' }); y += 10;
+
+  // Notes
+  doc.setDrawColor(220,220,218); doc.setLineWidth(0.2); doc.line(lm, y, rm, y); y += 6;
+  doc.setFont('helvetica', 'normal'); doc.setFontSize(8.5); doc.setTextColor(100,100,98);
+  var noteLines = doc.splitTextToSize(q.notes||'', pw);
+  doc.text(noteLines, lm, y);
+
+  doc.save((m.biz||'Quote').replace(/\s+/g,'-') + '-' + (m.quoteNum||'quote') + '.pdf');
+}
+
+/* ---- Email modal ---- */
+function openModal() {
+  document.getElementById('email-modal').classList.add('open');
+}
+function closeModal() {
+  document.getElementById('email-modal').classList.remove('open');
+}
+
+function sendEmail() {
+  var custName  = document.getElementById('cust-name').value.trim();
+  var custEmail = document.getElementById('cust-email').value.trim();
+  var fromEmail = document.getElementById('from-email').value.trim() || currentMeta.email || '';
+  var m = currentMeta;
+  var q = currentQuote;
+
+  if (!custEmail) { alert('Please enter the customer email address.'); return; }
+
+  var subject = 'Your quote from ' + m.biz + ' — ' + (m.quoteNum||'') + ' (' + money(m.total||0) + ')';
+
+  var body = 'Hi ' + (custName || 'there') + ',\n\n'
+    + 'Thank you for getting in touch. Please find your quote details below.\n\n'
+    + '---\n'
+    + 'QUOTE ' + (m.quoteNum||'') + '  ·  ' + (m.today||'') + '\n'
+    + m.biz + '  ·  ' + m.name + '\n'
+    + '---\n\n'
+    + 'SCOPE OF WORK\n'
+    + (q && q.job_summary ? q.job_summary : '') + '\n\n'
+    + 'TOTAL: ' + money(m.total||0) + '\n\n'
+    + 'Full itemised breakdown is attached as a PDF.\n\n'
+    + (q && q.notes ? q.notes + '\n\n' : '')
+    + 'Please don\'t hesitate to get in touch if you have any questions.\n\n'
+    + 'Kind regards,\n'
+    + m.name + '\n'
+    + m.biz + '\n'
+    + [m.phone, fromEmail].filter(Boolean).join('\n');
+
+  var mailto = 'mailto:' + custEmail
+    + '?subject=' + encodeURIComponent(subject)
+    + '&body=' + encodeURIComponent(body);
+
+  if (fromEmail) mailto += '&reply-to=' + encodeURIComponent(fromEmail);
+
+  window.location.href = mailto;
+  closeModal();
+}
+
+function resetForm() {
+  document.getElementById('job').value = '';
+  document.getElementById('out-wrap').style.display = 'none';
+  document.getElementById('quote-section').style.display = 'none';
+  currentQuote = null;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+
+
+</body></html>
