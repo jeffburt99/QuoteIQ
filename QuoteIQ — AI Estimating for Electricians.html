@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<!-- saved from url=(0045)file:///Users/jeffburt/Downloads/index_2.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QuoteIQ — AI Estimating for Electricians</title>
+<script src="./QuoteIQ — AI Estimating for Electricians_files/jspdf.umd.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f5f3;color:#1a1a18;min-height:100vh;padding:28px 16px 80px;}
+.container{max-width:860px;margin:0 auto;}
+.logo-row{display:flex;align-items:center;gap:10px;margin-bottom:4px;}
+.logo-icon{width:34px;height:34px;background:#1a1a18;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;}
+.logo-text{font-size:20px;font-weight:700;letter-spacing:-0.4px;}
+.logo-text span{color:#f5a623;}
+.subtitle{font-size:13px;color:#999;margin-bottom:26px;}
+.card{background:#fff;border-radius:14px;border:0.5px solid #e0e0dd;padding:20px 22px;margin-bottom:14px;}
+.card-title{font-size:11px;font-weight:700;color:#1a1a18;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.step-badge{width:20px;height:20px;border-radius:50%;background:#1a1a18;color:#fff;font-size:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+label{font-size:11px;font-weight:500;color:#888;text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:5px;}
+input,textarea,select{width:100%;font-size:13px;padding:9px 12px;border-radius:8px;border:0.5px solid #ddd;background:#fafaf9;color:#1a1a18;font-family:inherit;appearance:none;}
+input:focus,textarea:focus,select:focus{outline:none;border-color:#aaa;background:#fff;}
+textarea{resize:vertical;line-height:1.6;}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:30px;}
+.grid{display:grid;gap:12px;margin-bottom:14px;}
+.g2{grid-template-columns:1fr 1fr;}
+.g3{grid-template-columns:1fr 1fr 1fr;}
+.g4{grid-template-columns:1fr 1fr 1fr 1fr;}
+.toggle-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+.toggle-chip{font-size:12px;padding:6px 14px;border-radius:20px;border:0.5px solid #ddd;background:#fafaf9;color:#666;cursor:pointer;transition:all .12s;user-select:none;}
+.toggle-chip.on{background:#1a1a18;color:#fff;border-color:#1a1a18;}
+.api-wrap{position:relative;}
+.api-wrap input{padding-right:60px;font-family:monospace;font-size:12px;}
+.toggle-btn{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:11px;color:#888;cursor:pointer;background:none;border:none;padding:0;}
+.sdiv{font-size:11px;font-weight:600;color:#bbb;text-transform:uppercase;letter-spacing:.07em;margin:4px 0 10px;}
+.chat-wrap{border:0.5px solid #e0e0dd;border-radius:12px;overflow:hidden;margin-bottom:14px;display:none;}
+.chat-messages{padding:16px;display:flex;flex-direction:column;gap:10px;max-height:380px;overflow-y:auto;background:#fafaf9;}
+.msg{max-width:88%;padding:10px 14px;border-radius:12px;font-size:13px;line-height:1.6;}
+.msg.ai{background:#fff;border:0.5px solid #e0e0dd;color:#1a1a18;align-self:flex-start;border-radius:4px 12px 12px 12px;}
+.msg.user{background:#1a1a18;color:#fff;align-self:flex-end;border-radius:12px 4px 12px 12px;}
+.msg.thinking{color:#aaa;font-style:italic;}
+.chat-input-row{display:flex;border-top:0.5px solid #e0e0dd;background:#fff;}
+.chat-input{flex:1;border:none;background:transparent;font-size:13px;padding:12px 14px;font-family:inherit;color:#1a1a18;}
+.chat-input:focus{outline:none;}
+.chat-send{padding:10px 16px;background:#1a1a18;color:#fff;border:none;font-size:12px;font-weight:600;cursor:pointer;}
+.chat-send:disabled{opacity:.4;}
+.gen-btn{width:100%;font-size:14px;font-weight:700;padding:13px;border-radius:10px;border:none;background:#1a1a18;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;}
+.gen-btn:disabled{opacity:.35;cursor:not-allowed;}
+.gen-btn:hover:not(:disabled){background:#2d2d2a;}
+.gen-btn.blue{background:#2d5be3;}
+.gen-btn.blue:hover:not(:disabled){background:#1e46c4;}
+.skip-btn{width:100%;font-size:13px;padding:10px;border-radius:8px;border:0.5px solid #ddd;background:#fff;color:#888;cursor:pointer;margin-top:8px;}
+.skip-btn:hover{background:#f5f5f3;color:#1a1a18;}
+.output-wrap{display:none;margin-top:6px;}
+.action-bar{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;}
+.action-btn{flex:1;min-width:120px;font-size:13px;font-weight:500;padding:10px 14px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;border:0.5px solid #ddd;background:#fff;color:#1a1a18;}
+.action-btn:hover{background:#f5f5f3;}
+.action-btn.primary{background:#1a1a18;color:#fff;border-color:#1a1a18;}
+.action-btn.primary:hover{background:#2d2d2a;}
+
+/* ---- EDITABLE QUOTE TABLE ---- */
+.quote-editor{background:#fff;border-radius:14px;border:0.5px solid #e0e0dd;overflow:hidden;}
+.qe-header{padding:22px 24px 18px;border-bottom:2px solid #1a1a18;display:flex;justify-content:space-between;align-items:flex-start;}
+.qe-biz{font-size:18px;font-weight:700;}
+.qe-contact{font-size:12px;color:#888;margin-top:3px;}
+.qe-num{font-size:14px;font-weight:600;text-align:right;display:block;}
+.qe-date{font-size:12px;color:#888;text-align:right;margin-top:2px;}
+.qe-summary-wrap{padding:14px 24px;border-bottom:0.5px solid #eee;}
+.qe-summary-label{font-size:10px;font-weight:600;color:#bbb;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;}
+.qe-summary-text{font-size:13px;color:#444;line-height:1.6;width:100%;border:none;background:transparent;resize:none;font-family:inherit;padding:0;}
+.qe-summary-text:focus{outline:none;}
+
+/* line item table */
+.li-table{width:100%;border-collapse:collapse;}
+.li-table thead tr{background:#f8f8f7;}
+.li-table th{font-size:10px;font-weight:600;color:#bbb;text-transform:uppercase;letter-spacing:.05em;padding:10px 8px;text-align:left;border-bottom:0.5px solid #eee;}
+.li-table th.r{text-align:right;}
+.li-table td{padding:4px 4px;border-bottom:0.5px solid #f5f5f3;vertical-align:middle;}
+.li-table tbody tr:last-child td{border-bottom:none;}
+.li-table tbody tr:hover{background:#fafaf9;}
+
+/* editable cells */
+.cell-desc{width:36%;}
+.cell-type{width:12%;}
+.cell-hrs{width:8%;}
+.cell-rate{width:10%;}
+.cell-mat{width:10%;}
+.cell-total{width:12%;text-align:right;font-weight:500;font-size:13px;padding-right:8px;color:#1a1a18;}
+.cell-del{width:4%;text-align:center;}
+
+.ei{width:100%;border:none;background:transparent;font-size:12.5px;font-family:inherit;color:#1a1a18;padding:6px 6px;border-radius:6px;}
+.ei:focus{outline:none;background:#f0f0ee;}
+.ei.num{text-align:right;}
+.ei-sel{width:100%;border:none;background:transparent;font-size:11.5px;font-family:inherit;color:#555;padding:6px 4px;border-radius:6px;cursor:pointer;appearance:none;}
+.ei-sel:focus{outline:none;background:#f0f0ee;}
+.del-btn{background:none;border:none;cursor:pointer;color:#ddd;font-size:16px;padding:4px 6px;border-radius:4px;line-height:1;}
+.del-btn:hover{color:#e24b4a;background:#fff0f0;}
+
+/* add row */
+.add-row-btn{width:100%;padding:10px;border:none;background:#f8f8f7;color:#888;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;border-top:0.5px solid #eee;}
+.add-row-btn:hover{background:#f0f0ee;color:#1a1a18;}
+
+/* totals */
+.qe-totals-wrap{padding:14px 24px;display:flex;justify-content:flex-end;border-top:0.5px solid #eee;}
+.qe-totals{width:230px;}
+.tot-row{display:flex;justify-content:space-between;font-size:12px;color:#888;padding:3px 0;}
+.tot-row.big{font-size:16px;font-weight:700;color:#1a1a18;border-top:2px solid #1a1a18;padding-top:10px;margin-top:6px;}
+.qe-warn{margin:0 24px 14px;background:#fff8ee;border-left:3px solid #f5a623;padding:10px 14px;font-size:12px;color:#7a4f00;line-height:1.6;border-radius:0 6px 6px 0;}
+.qe-notes-wrap{padding:0 24px 20px;}
+.qe-notes{font-size:12px;color:#888;line-height:1.8;width:100%;border:none;background:transparent;resize:none;font-family:inherit;padding:0;}
+.qe-notes:focus{outline:none;}
+.qe-footer{padding:12px 24px;border-top:0.5px solid #eee;font-size:11px;color:#ccc;text-align:center;}
+
+.edit-hint{font-size:11px;color:#bbb;margin-bottom:10px;display:flex;align-items:center;gap:5px;}
+
+.msg-box{padding:12px 16px;border-radius:8px;font-size:13px;line-height:1.6;margin-bottom:10px;}
+.err{background:#FCEBEB;color:#791F1F;}
+.info-box{background:#f0f0ee;color:#555;text-align:center;}
+.spin{display:inline-block;width:13px;height:13px;border:2px solid #ddd;border-top-color:#555;border-radius:50%;animation:sp .7s linear infinite;vertical-align:middle;margin-right:6px;}
+@keyframes sp{to{transform:rotate(360deg);}}
+
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:100;align-items:center;justify-content:center;}
+.modal-bg.open{display:flex;}
+.modal{background:#fff;border-radius:14px;padding:24px 26px;width:100%;max-width:460px;margin:16px;}
+.modal h3{font-size:16px;font-weight:600;margin-bottom:4px;}
+.modal p{font-size:13px;color:#888;margin-bottom:18px;line-height:1.5;}
+.modal label{margin-bottom:5px;}
+.modal input{margin-bottom:12px;}
+.modal-btns{display:flex;gap:10px;margin-top:4px;}
+.modal-btns button{flex:1;padding:10px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;border:0.5px solid #ddd;background:#fff;color:#1a1a18;}
+.modal-btns .send{background:#1a1a18;color:#fff;border-color:#1a1a18;}
+
+@media(max-width:640px){
+  .g3,.g4{grid-template-columns:1fr 1fr;}
+  .g2{grid-template-columns:1fr;}
+  .action-btn{min-width:90px;font-size:12px;}
+  .cell-type,.cell-rate{display:none;}
+  .qe-header{flex-direction:column;gap:10px;}
+}
+</style>
+</head>
+<body>
+
+<div class="modal-bg" id="email-modal">
+  <div class="modal">
+    <h3>📧 Email quote to customer</h3>
+    <p>Opens your email app with the quote pre-filled. Attach the PDF for the full itemised breakdown.</p>
+    <label>Customer name</label><input type="text" id="cust-name" placeholder="e.g. Sarah Johnson">
+    <label>Customer email</label><input type="email" id="cust-email" placeholder="e.g. sarah@example.com">
+    <label>Your reply-to email</label><input type="email" id="from-email" placeholder="e.g. james@sparkpro.com">
+    <div class="modal-btns">
+      <button onclick="closeModal()">Cancel</button>
+      <button class="send" onclick="sendEmail()">Open in email app</button>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="logo-row">
+    <div class="logo-icon">⚡</div>
+    <div class="logo-text">Quote<span>IQ</span></div>
+  </div>
+  <p class="subtitle">AI-powered estimating for electricians — generate, edit, and send professional quotes in minutes.</p>
+
+  <!-- STEP 1 -->
+  <div class="card">
+    <div class="card-title"><span class="step-badge">1</span> Your details</div>
+    <div class="grid g3">
+      <div><label>Business name</label><input type="text" id="biz-name" value="Spark Pro Electrical"></div>
+      <div><label>Your name</label><input type="text" id="elec-name" value="James Carter"></div>
+      <div><label>Base labour rate ($/hr)</label><input type="number" id="rate" value="95"></div>
+    </div>
+    <div class="grid g2">
+      <div><label>Phone</label><input type="text" id="phone" placeholder="e.g. 0400 000 000"></div>
+      <div><label>Email</label><input type="email" id="email" placeholder="e.g. james@sparkpro.com"></div>
+    </div>
+    <label>Anthropic API key</label>
+    <div class="api-wrap">
+      <input type="password" id="api-key" placeholder="sk-ant-...">
+      <button class="toggle-btn" onclick="toggleKey()">Show</button>
+    </div>
+    <p style="font-size:11px;color:#ccc;margin-top:6px;">Stays in your browser only — never stored or shared.</p>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="card">
+    <div class="card-title"><span class="step-badge">2</span> Job details</div>
+    <div class="sdiv">Property</div>
+    <div class="grid g3">
+      <div><label>Property type</label>
+        <select id="prop-type">
+          <option>Residential — single storey</option>
+          <option>Residential — double storey</option>
+          <option>Unit / apartment</option>
+          <option>Commercial — small</option>
+          <option>Commercial — large</option>
+          <option>Industrial</option>
+        </select>
+      </div>
+      <div><label>Build era</label>
+        <select id="build-era">
+          <option>Modern (post 2000)</option>
+          <option>1980s–2000s</option>
+          <option>1960s–1980s</option>
+          <option>Pre 1960s</option>
+          <option>Unknown</option>
+        </select>
+      </div>
+      <div><label>Access difficulty</label>
+        <select id="access">
+          <option value="easy">Easy — open access</option>
+          <option value="medium" selected="">Medium — some roof/wall work</option>
+          <option value="hard">Hard — concrete, restricted</option>
+          <option value="very-hard">Very hard — heritage, scaffolding</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="sdiv">Labour conditions</div>
+    <div class="grid g4" style="margin-bottom:6px;">
+      <div><label>Shift type</label>
+        <select id="shift" onchange="autoFillPenalty()">
+          <option value="1.0">Standard hours</option>
+          <option value="1.5">After hours (×1.5)</option>
+          <option value="1.5">Saturday (×1.5)</option>
+          <option value="2.0">Sunday (×2.0)</option>
+          <option value="2.5">Public holiday (×2.5)</option>
+          <option value="custom">Custom multiplier</option>
+        </select>
+      </div>
+      <div><label>Penalty multiplier</label><input type="number" id="penalty" value="1.0" step="0.05" min="1" max="3"></div>
+      <div><label>Apprentice hours</label><input type="number" id="app-hrs" value="0" min="0"></div>
+      <div><label>Apprentice rate ($/hr)</label><input type="number" id="app-rate" value="25" min="0"></div>
+    </div>
+    <p style="font-size:11px;color:#bbb;margin-bottom:14px;">Effective qualified rate = base × multiplier. Apprentice is billed separately at their own rate.</p>
+
+    <div class="sdiv">Scope of work</div>
+    <label style="margin-bottom:6px;">Work types (select all that apply)</label>
+    <div class="toggle-row" id="work-types">
+      <div class="toggle-chip" onclick="toggleChip(this)">Consumer unit / board upgrade</div>
+      <div class="toggle-chip" onclick="toggleChip(this)">New circuits</div>
+      <div class="toggle-chip" onclick="toggleChip(this)">Power points / sockets</div>
+      <div class="toggle-chip" onclick="toggleChip(this)">Lighting install</div>
+      <div class="toggle-chip" onclick="toggleChip(this)">EV charger</div>
+      <div class="toggle-chip" onclick="toggleChip(this)">Solar / battery</div>
+      <div class="toggle-chip" onclick="toggleChip(this)">Fault finding</div>
+      <div class="toggle-chip" onclick="toggleChip(this)">Rewire (partial)</div>
+      <div class="toggle-chip" onclick="toggleChip(this)">Rewire (full)</div>
+      <div class="toggle-chip" onclick="toggleChip(this)">Switchboard / metering</div>
+      <div class="toggle-chip" onclick="toggleChip(this)">Data / comms</div>
+      <div class="toggle-chip" onclick="toggleChip(this)">Safety inspection / RCD test</div>
+    </div>
+
+    <div class="sdiv">Quantities</div>
+    <div class="grid g4">
+      <div><label>No. of circuits</label><input type="number" id="circuits" value="0" min="0"></div>
+      <div><label>Cable run (metres)</label><input type="number" id="cable-run" value="0" min="0"></div>
+      <div><label>Outlets / points</label><input type="number" id="points" value="0" min="0"></div>
+      <div><label>Light fittings</label><input type="number" id="lights" value="0" min="0"></div>
+    </div>
+    <label>Additional notes / anything unusual</label>
+    <textarea id="extra-notes" rows="3" placeholder="e.g. asbestos suspected, specific brands requested (Clipsal Iconic, Hager board, SAL lighting), stairwell access only, council permits needed..."></textarea>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="card">
+    <div class="card-title"><span class="step-badge">3</span> AI clarifying questions</div>
+    <p style="font-size:13px;color:#888;margin-bottom:14px;line-height:1.6;">The AI will ask 3 targeted questions based on your job details to ensure the estimate is accurate before generating.</p>
+    <button class="gen-btn blue" id="clarify-btn" onclick="startClarify()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+      Ask clarifying questions first
+    </button>
+    <button class="skip-btn" onclick="skipToGenerate()">Skip — generate from form data only</button>
+  </div>
+
+  <!-- CHAT -->
+  <div class="chat-wrap" id="chat-wrap">
+    <div class="chat-messages" id="chat-messages"></div>
+    <div class="chat-input-row">
+      <input class="chat-input" type="text" id="chat-input" placeholder="Type your answer and press Enter…" onkeydown="if(event.key===&#39;Enter&#39;)sendChat()">
+      <button class="chat-send" id="chat-send" onclick="sendChat()">Send</button>
+    </div>
+  </div>
+
+  <div id="generate-area" style="display:none;margin-bottom:14px;">
+    <button class="gen-btn" id="run-btn" onclick="go()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+      Generate quote
+    </button>
+  </div>
+
+  <!-- OUTPUT -->
+  <div class="output-wrap" id="out-wrap">
+    <div id="status-area"></div>
+    <div id="quote-section" style="display:none;">
+      <div class="edit-hint">
+        ✏️ Every field below is editable — click any description, hours, rate or material cost to adjust. Totals update automatically.
+      </div>
+      <div class="action-bar">
+        <button class="action-btn primary" onclick="downloadPDF()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          Download PDF
+        </button>
+        <button class="action-btn" onclick="openModal()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          Email to customer
+        </button>
+        <button class="action-btn" onclick="resetAll()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 .49-3.74"></path></svg>
+          New quote
+        </button>
+      </div>
+      <div class="quote-editor" id="quote-editor"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+var chatHistory = [];
+var currentMeta = {};
+var quoteNum = '';
+var quoteDate = '';
+
+/* ---- HELPERS ---- */
+function toggleKey(){var i=document.getElementById('api-key'),b=event.target;i.type=i.type==='password'?'text':'password';b.textContent=i.type==='password'?'Show':'Hide';}
+function toggleChip(el){el.classList.toggle('on');}
+function money(n){return '$'+(Math.round((n||0)*100)/100).toFixed(2);}
+function getVal(id){return document.getElementById(id).value.trim();}
+function getNum(id,def){return parseFloat(document.getElementById(id).value)||def||0;}
+
+function autoFillPenalty(){
+  var sel=document.getElementById('shift');
+  var val=sel.value;
+  if(val!=='custom') document.getElementById('penalty').value=val;
+}
+
+function getWorkTypes(){
+  return Array.from(document.querySelectorAll('#work-types .toggle-chip.on')).map(function(c){return c.textContent;});
+}
+
+function buildJobContext(){
+  var rate=getNum('rate',95), penalty=getNum('penalty',1), effectiveRate=Math.round(rate*penalty);
+  var appHrs=getNum('app-hrs',0), appRate=getNum('app-rate',25);
+  var wt=getWorkTypes();
+  return 'PROPERTY: '+getVal('prop-type')
+    +'\nBUILD ERA: '+getVal('build-era')
+    +'\nACCESS: '+document.getElementById('access').options[document.getElementById('access').selectedIndex].text
+    +'\nSHIFT: '+document.getElementById('shift').options[document.getElementById('shift').selectedIndex].text
+    +'\nQUALIFIED RATE: $'+effectiveRate+'/hr (base $'+rate+' × '+penalty+' penalty)'
+    +(appHrs>0?'\nAPPRENTICE: '+appHrs+' hrs at $'+appRate+'/hr (separate line item — do NOT add to qualified hours)':'')
+    +'\nWORK TYPES: '+(wt.length?wt.join(', '):'Not specified')
+    +'\nCIRCUITS: '+getVal('circuits')
+    +'\nCABLE RUN: '+getVal('cable-run')+'m'
+    +'\nOUTLETS: '+getVal('points')
+    +'\nLIGHT FITTINGS: '+getVal('lights')
+    +'\nNOTES: '+(getVal('extra-notes')||'None');
+}
+
+function callAPI(sys,msgs,onOK,onErr){
+  var key=getVal('api-key');
+  if(!key){onErr('Please enter your Anthropic API key.');return;}
+  var xhr=new XMLHttpRequest();
+  xhr.open('POST','https://api.anthropic.com/v1/messages');
+  xhr.setRequestHeader('Content-Type','application/json');
+  xhr.setRequestHeader('x-api-key',key);
+  xhr.setRequestHeader('anthropic-version','2023-06-01');
+  xhr.setRequestHeader('anthropic-dangerous-direct-browser-access','true');
+  xhr.onreadystatechange=function(){
+    if(xhr.readyState!==4)return;
+    var d;try{d=JSON.parse(xhr.responseText);}catch(e){onErr('Could not read API response.');return;}
+    if(xhr.status!==200){onErr((d.error&&d.error.message)?d.error.message:'API error '+xhr.status);return;}
+    if(!d.content||!d.content[0]||!d.content[0].text){onErr('Empty response — try again.');return;}
+    onOK(d.content[0].text);
+  };
+  xhr.onerror=function(){onErr('Network error — check your connection.');};
+  xhr.send(JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:900,system:sys,messages:msgs}));
+}
+
+/* ---- CLARIFY ---- */
+function startClarify(){
+  var wt=getWorkTypes();
+  if(!wt.length){alert('Please select at least one work type first.');return;}
+  document.getElementById('chat-wrap').style.display='block';
+  document.getElementById('chat-messages').innerHTML='';
+  chatHistory=[];
+  document.getElementById('clarify-btn').disabled=true;
+  addMsg('ai','<span class="spin"></span> Analysing job…',true);
+  var sys='You are an expert electrical estimating assistant. Ask EXACTLY 3 short, targeted clarifying questions in one message (numbered 1. 2. 3.) to fill the gaps most likely to affect the quote price. Be direct and trade-friendly. Focus on: wiring condition, specific brands or materials requested, exact location of work, switchboard brand/type, hazards (asbestos, heritage), permits needed, or job-specific unknowns. Do not ask about anything already provided.';
+  var content='Job details:\n\n'+buildJobContext()+'\n\nAsk your 3 questions.';
+  chatHistory.push({role:'user',content:content});
+  callAPI(sys,chatHistory,function(t){chatHistory.push({role:'assistant',content:t});updateThinking(t);},function(e){updateThinking('Error: '+e);});
+}
+
+function addMsg(role,html,thinking){
+  var d=document.createElement('div');
+  d.className='msg '+role+(thinking?' thinking':'');
+  d.innerHTML=html;
+  if(thinking)d.id='thinking-msg';
+  var c=document.getElementById('chat-messages');
+  c.appendChild(d);c.scrollTop=c.scrollHeight;
+}
+
+function updateThinking(text){
+  var el=document.getElementById('thinking-msg');
+  if(el){el.classList.remove('thinking');el.innerHTML=text;el.id='';}
+  else{addMsg('ai',text,false);}
+  document.getElementById('chat-messages').scrollTop=9999;
+  document.getElementById('generate-area').style.display='block';
+}
+
+function sendChat(){
+  var inp=document.getElementById('chat-input');
+  var t=inp.value.trim();if(!t)return;
+  inp.value='';
+  addMsg('user',t,false);
+  chatHistory.push({role:'user',content:t});
+  document.getElementById('chat-send').disabled=true;
+  addMsg('ai','<span class="spin"></span>',true);
+  var sys='You are an electrical estimating assistant. Keep replies short and trade-friendly. If all questions are answered say "Thanks — got everything I need. Click Generate quote." Max 2 follow-up questions.';
+  callAPI(sys,chatHistory,function(t){chatHistory.push({role:'assistant',content:t});updateThinking(t);document.getElementById('chat-send').disabled=false;},function(e){updateThinking('Error: '+e);document.getElementById('chat-send').disabled=false;});
+}
+
+function skipToGenerate(){
+  chatHistory=[];
+  document.getElementById('chat-wrap').style.display='none';
+  document.getElementById('generate-area').style.display='block';
+  document.getElementById('generate-area').scrollIntoView({behavior:'smooth'});
+}
+
+/* ---- GENERATE ---- */
+function go(){
+  var key=getVal('api-key');
+  if(!key){showErr('Please enter your Anthropic API key.');return;}
+  var rate=getNum('rate',95),penalty=getNum('penalty',1),effectiveRate=Math.round(rate*penalty);
+  var appHrs=getNum('app-hrs',0),appRate=getNum('app-rate',25);
+  currentMeta={biz:getVal('biz-name')||'Spark Pro Electrical',name:getVal('elec-name')||'James Carter',rate:rate,penalty:penalty,effectiveRate:effectiveRate,appHrs:appHrs,appRate:appRate,phone:getVal('phone'),email:getVal('email')};
+  quoteNum='QT-'+Math.floor(Math.random()*9000+1000);
+  quoteDate=new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+  currentMeta.quoteNum=quoteNum;currentMeta.today=quoteDate;
+
+  document.getElementById('run-btn').disabled=true;
+  document.getElementById('out-wrap').style.display='block';
+  document.getElementById('status-area').innerHTML='<div class="msg-box info-box"><span class="spin"></span>Generating your quote…</div>';
+  document.getElementById('quote-section').style.display='none';
+
+  var chatCtx=chatHistory.length>2?'\n\nCLARIFYING Q&A:\n'+chatHistory.slice(1).map(function(m){return(m.role==='user'?'Sparky: ':'AI: ')+m.content;}).join('\n'):'';
+
+  var sys='You are an expert electrical estimating assistant for '+currentMeta.biz+', run by '+currentMeta.name+'.\n\n'
+    +'LABOUR RATES:\n'
+    +'- Qualified electrician: $'+effectiveRate+'/hr\n'
+    +(appHrs>0?'- Apprentice: $'+appRate+'/hr for '+appHrs+' hrs (create as a SEPARATE line item called "Apprentice labour" — do NOT mix with qualified hours)\n':'')
+    +'\nRULES:\n'
+    +'- Build a precise itemised quote from the job details and Q&A\n'
+    +'- Each line item has: description, type ("qualified", "apprentice", or "material"), hours (0 for material-only lines), materials_cost, line_total\n'
+    +'- line_total = (hours × correct_rate) + materials_cost\n'
+    +'- Qualified lines use $'+effectiveRate+'/hr. Apprentice lines use $'+appRate+'/hr\n'
+    +'- Materials at trade price + 20% markup\n'
+    +'- Add travel/callout if not implied (1hr qualified, $0 materials)\n'
+    +'- Include testing and certification costs\n'
+    +'- Flag unclear items with [CLARIFY]\n'
+    +'- Notes: 1yr labour warranty, 50% deposit on acceptance, balance on completion\n'
+    +'- No invented model numbers\n\n'
+    +'Return ONLY raw valid JSON:\n'
+    +'{"job_summary":"","line_items":[{"description":"","type":"qualified","hours":0,"materials_cost":0,"line_total":0}],"subtotal":0,"tax_rate":0.10,"tax_amount":0,"total":0,"clarifications":[],"notes":""}';
+
+  callAPI(sys,[{role:'user',content:'JOB DETAILS:\n'+buildJobContext()+chatCtx+'\n\nGenerate the itemised quote.'}],
+    function(t){
+      document.getElementById('run-btn').disabled=false;
+      var raw=t.replace(/```json|```/g,'').trim();
+      try{var q=JSON.parse(raw);renderEditor(q);}
+      catch(e){showErr('Could not parse quote — please try again.');}
+    },
+    function(e){document.getElementById('run-btn').disabled=false;showErr(e);}
+  );
+}
+
+/* ---- EDITABLE QUOTE RENDERER ---- */
+function renderEditor(q){
+  var m=currentMeta;
+  var expiry=new Date(Date.now()+30*24*60*60*1000).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+  var contact=[m.phone,m.email].filter(Boolean).join(' · ');
+
+  var rows=(q.line_items||[]).map(function(item,i){
+    var rateForType=item.type==='apprentice'?m.appRate:m.effectiveRate;
+    return buildRow(i,item.description,item.type||'qualified',item.hours,rateForType,item.materials_cost,item.line_total);
+  }).join('');
+
+  var warns=(q.clarifications&&q.clarifications.length)?'<div class="qe-warn"><strong>⚠ Needs clarification:</strong><br>'+q.clarifications.join('<br>')+'</div>':'';
+
+  document.getElementById('quote-editor').innerHTML=
+    '<div class="qe-header">'
+    +'<div><div class="qe-biz">'+m.biz+'</div><div class="qe-contact">'+m.name+(contact?' · '+contact:'')+'</div></div>'
+    +'<div><span class="qe-num">'+m.quoteNum+'</span><div class="qe-date">'+m.today+' · valid 30 days</div></div>'
+    +'</div>'
+    +'<div class="qe-summary-wrap">'
+    +'<div class="qe-summary-label">Scope of work</div>'
+    +'<textarea class="qe-summary-text" id="q-summary" rows="2">'+q.job_summary+'</textarea>'
+    +'</div>'
+    +'<table class="li-table">'
+    +'<thead><tr>'
+    +'<th class="cell-desc">Description</th>'
+    +'<th class="cell-type">Type</th>'
+    +'<th class="cell-hrs r">Hours</th>'
+    +'<th class="cell-rate r">Rate</th>'
+    +'<th class="cell-mat r">Materials</th>'
+    +'<th class="cell-total r">Total</th>'
+    +'<th class="cell-del"></th>'
+    +'</tr></thead>'
+    +'<tbody id="li-body">'+rows+'</tbody>'
+    +'</table>'
+    +'<button class="add-row-btn" onclick="addRow()">+ Add line item</button>'
+    +warns
+    +'<div class="qe-totals-wrap"><div class="qe-totals" id="totals-block"></div></div>'
+    +'<div class="qe-notes-wrap">'
+    +'<div class="qe-summary-label" style="margin-bottom:6px;">Terms & notes</div>'
+    +'<textarea class="qe-notes" id="q-notes" rows="4">'+q.notes+'</textarea>'
+    +'</div>'
+    +'<div class="qe-footer">Valid until '+expiry+' · Generated by QuoteIQ</div>';
+
+  recalc();
+  document.getElementById('status-area').innerHTML='';
+  document.getElementById('quote-section').style.display='block';
+  document.getElementById('quote-editor').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function buildRow(i,desc,type,hrs,rate,mat,total){
+  return '<tr id="row-'+i+'">'
+    +'<td class="cell-desc"><input class="ei" type="text" value="'+esc(desc)+'" onchange="recalc()"/></td>'
+    +'<td class="cell-type"><select class="ei-sel" onchange="typeChanged(this,'+i+')">'
+    +'<option value="qualified"'+(type==='qualified'?' selected':'')+'>Qualified</option>'
+    +'<option value="apprentice"'+(type==='apprentice'?' selected':'')+'>Apprentice</option>'
+    +'<option value="material"'+(type==='material'?' selected':'')+'>Material only</option>'
+    +'</select></td>'
+    +'<td class="cell-hrs"><input class="ei num" type="number" min="0" step="0.25" value="'+hrs+'" onchange="recalc()"/></td>'
+    +'<td class="cell-rate"><input class="ei num" type="number" min="0" value="'+rate+'" onchange="recalc()"/></td>'
+    +'<td class="cell-mat"><input class="ei num" type="number" min="0" step="0.01" value="'+mat+'" onchange="recalc()"/></td>'
+    +'<td class="cell-total r" id="lt-'+i+'">'+money(total)+'</td>'
+    +'<td class="cell-del"><button class="del-btn" onclick="delRow('+i+')" title="Delete">×</button></td>'
+    +'</tr>';
+}
+
+var rowCounter=100;
+function addRow(){
+  rowCounter++;
+  var i=rowCounter;
+  var tr=document.createElement('tr');
+  tr.id='row-'+i;
+  tr.innerHTML=buildRow(i,'New line item','qualified',1,currentMeta.effectiveRate,0,currentMeta.effectiveRate).replace('<tr id="row-'+i+'">','').replace('</tr>','');
+  document.getElementById('li-body').appendChild(tr);
+  recalc();
+  tr.querySelector('input').focus();
+}
+
+function delRow(i){
+  var row=document.getElementById('row-'+i);
+  if(row){row.remove();recalc();}
+}
+
+function typeChanged(sel,i){
+  var row=document.getElementById('row-'+i);
+  if(!row)return;
+  var rateInput=row.querySelector('.cell-rate input');
+  if(sel.value==='apprentice'){rateInput.value=currentMeta.appRate;}
+  else if(sel.value==='qualified'){rateInput.value=currentMeta.effectiveRate;}
+  else{rateInput.value=0;}
+  recalc();
+}
+
+function esc(s){return(s||'').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
+
+function recalc(){
+  var rows=document.querySelectorAll('#li-body tr');
+  var subtotal=0;
+  rows.forEach(function(row){
+    var id=row.id.replace('row-','');
+    var inputs=row.querySelectorAll('input');
+    var hrs=parseFloat(inputs[1].value)||0;
+    var rate=parseFloat(inputs[2].value)||0;
+    var mat=parseFloat(inputs[3].value)||0;
+    var lt=Math.round((hrs*rate+mat)*100)/100;
+    subtotal+=lt;
+    var ltEl=document.getElementById('lt-'+id);
+    if(ltEl)ltEl.textContent=money(lt);
+  });
+  var taxRate=0.10;
+  var tax=Math.round(subtotal*taxRate*100)/100;
+  var total=Math.round((subtotal+tax)*100)/100;
+  currentMeta.total=total;
+  var tb=document.getElementById('totals-block');
+  if(tb){
+    tb.innerHTML='<div class="tot-row"><span>Subtotal</span><span>'+money(subtotal)+'</span></div>'
+      +'<div class="tot-row"><span>GST (10%)</span><span>'+money(tax)+'</span></div>'
+      +'<div class="tot-row big"><span>Total</span><span>'+money(total)+'</span></div>';
+  }
+}
+
+function getLineItems(){
+  var rows=document.querySelectorAll('#li-body tr');
+  var items=[];
+  rows.forEach(function(row){
+    var inputs=row.querySelectorAll('input');
+    var sel=row.querySelector('select');
+    var desc=inputs[0].value;
+    var hrs=parseFloat(inputs[1].value)||0;
+    var rate=parseFloat(inputs[2].value)||0;
+    var mat=parseFloat(inputs[3].value)||0;
+    var lt=Math.round((hrs*rate+mat)*100)/100;
+    items.push({description:desc,type:sel?sel.value:'qualified',hours:hrs,rate:rate,materials_cost:mat,line_total:lt});
+  });
+  return items;
+}
+
+function showErr(msg){
+  document.getElementById('out-wrap').style.display='block';
+  document.getElementById('status-area').innerHTML='<div class="msg-box err"><strong>Error:</strong> '+msg+'</div>';
+}
+
+/* ---- PDF ---- */
+function downloadPDF(){
+  if(!window.jspdf){alert('PDF library not loaded yet — try again in a moment.');return;}
+  var items=getLineItems();
+  var summary=document.getElementById('q-summary')?document.getElementById('q-summary').value:'';
+  var notes=document.getElementById('q-notes')?document.getElementById('q-notes').value:'';
+  var m=currentMeta;
+  var doc=new window.jspdf.jsPDF({unit:'mm',format:'a4'});
+  var lm=18,rm=192,y=20,pw=174;
+
+  doc.setFont('helvetica','bold');doc.setFontSize(18);doc.setTextColor(30,30,28);doc.text(m.biz,lm,y);
+  doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(120,120,120);y+=6;
+  doc.text([m.name,m.phone,m.email].filter(Boolean).join('   ·   '),lm,y);
+  doc.setFont('helvetica','bold');doc.setFontSize(10);doc.setTextColor(30,30,28);doc.text('Quote '+m.quoteNum,rm,20,{align:'right'});
+  doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(120,120,120);doc.text(m.today,rm,26,{align:'right'});
+  y+=8;doc.setDrawColor(30,30,28);doc.setLineWidth(0.6);doc.line(lm,y,rm,y);y+=8;
+
+  doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(150,150,148);doc.text('SCOPE OF WORK',lm,y);y+=5;
+  doc.setFont('helvetica','normal');doc.setFontSize(10);doc.setTextColor(60,60,58);
+  var sl=doc.splitTextToSize(summary,pw);doc.text(sl,lm,y);y+=sl.length*5+8;
+
+  doc.setFillColor(245,245,243);doc.rect(lm,y-4,pw,8,'F');
+  doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(130,130,128);
+  doc.text('DESCRIPTION',lm+2,y+0.5);doc.text('TYPE',108,y+0.5,{align:'right'});doc.text('HRS',122,y+0.5,{align:'right'});doc.text('RATE',138,y+0.5,{align:'right'});doc.text('MATERIALS',162,y+0.5,{align:'right'});doc.text('TOTAL',rm,y+0.5,{align:'right'});
+  y+=7;
+  doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setDrawColor(220,220,218);doc.setLineWidth(0.2);
+
+  items.forEach(function(item){
+    var dl=doc.splitTextToSize(item.description,82);
+    var rh=Math.max(dl.length*4.5,7);
+    doc.setTextColor(30,30,28);doc.text(dl,lm+2,y);
+    doc.setTextColor(100,100,98);
+    doc.text(item.type,108,y,{align:'right'});
+    doc.text(String(item.hours),122,y,{align:'right'});
+    doc.text(money(item.rate||0),138,y,{align:'right'});
+    doc.text(money(item.materials_cost),162,y,{align:'right'});
+    doc.setTextColor(30,30,28);doc.text(money(item.line_total),rm,y,{align:'right'});
+    y+=rh;doc.line(lm,y,rm,y);y+=2;
+    if(y>260){doc.addPage();y=20;}
+  });
+
+  y+=4;
+  var sub=items.reduce(function(a,i){return a+i.line_total;},0);
+  var tax=Math.round(sub*0.10*100)/100;
+  var tot=Math.round((sub+tax)*100)/100;
+  doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(100,100,98);
+  doc.text('Subtotal',140,y);doc.text(money(sub),rm,y,{align:'right'});y+=5;
+  doc.text('GST (10%)',140,y);doc.text(money(tax),rm,y,{align:'right'});y+=6;
+  doc.setDrawColor(30,30,28);doc.setLineWidth(0.5);doc.line(140,y,rm,y);y+=5;
+  doc.setFont('helvetica','bold');doc.setFontSize(11);doc.setTextColor(30,30,28);
+  doc.text('Total',140,y);doc.text(money(tot),rm,y,{align:'right'});y+=10;
+  doc.setDrawColor(220,220,218);doc.setLineWidth(0.2);doc.line(lm,y,rm,y);y+=6;
+  doc.setFont('helvetica','normal');doc.setFontSize(8.5);doc.setTextColor(100,100,98);
+  var nl=doc.splitTextToSize(notes,pw);doc.text(nl,lm,y);
+  doc.save((m.biz||'Quote').replace(/\s+/g,'-')+'-'+m.quoteNum+'.pdf');
+}
+
+/* ---- EMAIL ---- */
+function openModal(){document.getElementById('email-modal').classList.add('open');}
+function closeModal(){document.getElementById('email-modal').classList.remove('open');}
+function sendEmail(){
+  var cn=document.getElementById('cust-name').value.trim();
+  var ce=document.getElementById('cust-email').value.trim();
+  var fe=document.getElementById('from-email').value.trim()||currentMeta.email||'';
+  if(!ce){alert('Please enter the customer email.');return;}
+  var m=currentMeta;
+  var summary=document.getElementById('q-summary')?document.getElementById('q-summary').value:'';
+  var subj='Your quote from '+m.biz+' — '+m.quoteNum+' ('+money(m.total||0)+')';
+  var body='Hi '+(cn||'there')+',\n\nThank you for getting in touch. Please find your quote details below.\n\n'
+    +'---\nQUOTE '+m.quoteNum+'  ·  '+m.today+'\n'+m.biz+'  ·  '+m.name+'\n---\n\n'
+    +'SCOPE OF WORK\n'+summary+'\n\nTOTAL: '+money(m.total||0)+'\n\n'
+    +'Full itemised breakdown attached as PDF.\n\n'
+    +'Please don\'t hesitate to get in touch with any questions.\n\nKind regards,\n'+m.name+'\n'+m.biz
+    +(m.phone?'\n'+m.phone:'')+(fe?'\n'+fe:'');
+  window.location.href='mailto:'+ce+'?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(body);
+  closeModal();
+}
+
+function resetAll(){
+  chatHistory=[];currentMeta={};
+  document.getElementById('out-wrap').style.display='none';
+  document.getElementById('quote-section').style.display='none';
+  document.getElementById('chat-wrap').style.display='none';
+  document.getElementById('generate-area').style.display='none';
+  document.getElementById('clarify-btn').disabled=false;
+  document.getElementById('chat-messages').innerHTML='';
+  document.querySelectorAll('.toggle-chip.on').forEach(function(c){c.classList.remove('on');});
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+
+
+</body></html>
